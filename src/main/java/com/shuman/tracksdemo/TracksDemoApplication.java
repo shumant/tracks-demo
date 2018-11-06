@@ -9,7 +9,9 @@ public class TracksDemoApplication {
 
     public static void main(String[] args) throws Exception {
 
-        try (EmbeddedPostgres pg = EmbeddedPostgres.builder().start()) {
+        try (EmbeddedPostgres pg = EmbeddedPostgres.builder()
+                                                   .setPort(7839)
+                                                   .start()) {
             SpringApplication.run(TracksDemoApplication.class, args);
         }
     }

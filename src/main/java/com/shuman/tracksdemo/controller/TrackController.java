@@ -26,7 +26,7 @@ public class TrackController {
         return trackService.createTrack(track);
     }
 
-    @PutMapping("${id}")
+    @PutMapping("{id}")
     public Track updateTrack(@PathVariable("id") UUID trackId, @RequestBody Track track) {
         if (!Objects.equals(trackId, track.getId())) {
             throw new IllegalArgumentException("Path 'ID' and track 'ID' do not match");
@@ -34,7 +34,7 @@ public class TrackController {
         return trackService.updateTrack(track);
     }
 
-    @DeleteMapping("${id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteTrack(@PathVariable("id") UUID trackId) {
         trackService.removeTrack(trackId);
         return ResponseEntity.ok().build();

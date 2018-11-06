@@ -15,7 +15,7 @@ public class CarController {
     @Autowired
     private CarService carService;
 
-    @PutMapping("${id}")
+    @PutMapping("{id}")
     public Car updateTrack(@PathVariable("id") UUID carId, @RequestBody Car car) {
         if (!Objects.equals(carId, car.getId())) {
             throw new IllegalArgumentException("Path 'ID' and car 'ID' do not match");
@@ -24,7 +24,7 @@ public class CarController {
         return carService.updateCar(car);
     }
 
-    @DeleteMapping("${id}")
+    @DeleteMapping("{id}")
     public ResponseEntity<?> deleteTrack(@PathVariable("id") UUID carId) {
         carService.removeCar(carId);
         return ResponseEntity.ok().build();
