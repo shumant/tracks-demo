@@ -3,9 +3,11 @@ package com.shuman.tracksdemo.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
+import javax.persistence.Entity;
 import java.util.UUID;
 
 @Data
+@Entity
 public class Car {
     private UUID id;
     private String code;

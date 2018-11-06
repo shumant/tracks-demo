@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @RestController
@@ -27,6 +28,9 @@ public class TrackController {
 
     @PutMapping("${id}")
     public Track updateTrack(@PathVariable("id") UUID trackId, @RequestBody Track track) {
+        if (!Objects.equals(trackId, track.getId())) {
+            throw new IllegalArgumentException("Path 'ID' and track 'ID' do not match");
+        }
         return trackService.updateTrack(track);
     }
 
