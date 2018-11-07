@@ -1,5 +1,6 @@
 package com.shuman.tracksdemo.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
@@ -19,4 +20,11 @@ public class Car {
     @JsonProperty("max-speed")
     @Embedded
     private CarSpeed maxSpeed;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "track_id")
+    @JsonIgnore
+    private Track track;
+
+
 }
