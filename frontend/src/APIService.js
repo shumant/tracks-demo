@@ -1,5 +1,4 @@
 import axios from 'axios';
-const API_URL = 'http://localhost:8000';
 export class APIService{
 
 constructor(){
@@ -7,7 +6,7 @@ constructor(){
 
 getTracks() {
     const url = `tracks/`;
-    return axios.get(url).then(response => response.data);
+    return axios.get(url);
 }
 
 getContact(pk) {
@@ -16,18 +15,17 @@ getContact(pk) {
 }
 
 createTrack(track){
-
     const url = `tracks/`;
     return axios.post(url,track);
 }
 
 updateTrack(track){
-    const url = `tracks/{track.id}`;
+    const url = `tracks/${track.id}`;
     return axios.put(url,track);
 }
 
 deleteTrack(track){
-    const url = `tracks/{track.id}`;
+    const url = `tracks/${track.id}`;
     return axios.delete(url);
 }
 
