@@ -31,15 +31,13 @@ public class TrackCarController {
     }
 
     @PostMapping("/tracks")
-    public Track createTrack(Track track) {
+    public Track createTrack(@RequestBody Track track) {
         return trackService.createTrack(track);
     }
 
     @PutMapping("/tracks/{id}")
     public Track updateTrack(@PathVariable("id") UUID trackId, @RequestBody Track track) {
-        if (!Objects.equals(trackId, track.getId())) {
-            throw new IllegalArgumentException("Path 'ID' and trackId 'ID' do not match");
-        }
+        track.setId(trackId);
         return trackService.updateTrack(track);
     }
 
@@ -50,6 +48,10 @@ public class TrackCarController {
     }
     
     // cars
+    @GetMapping("/tracks/{trackId}/cars")
+    public List<Car> getCars(@PathVariable("trackId") UUID trackId) {
+        return carService.getCars(trackId);
+    }
 
     @PostMapping("tracks/{trackId}/cars")
     public Car createCar(@PathVariable("trackId") UUID trackId, @RequestBody Car carToCreate) {
@@ -58,9 +60,7 @@ public class TrackCarController {
 
     @PutMapping("/cars/{id}")
     public Car updateCar(@PathVariable("id") UUID carId, @RequestBody Car car) {
-        if (!Objects.equals(carId, car.getId())) {
-            throw new IllegalArgumentException("Path 'ID' and car 'ID' do not match");
-        }
+        car.setId(carId);
 
         return carService.updateCar(car);
     }

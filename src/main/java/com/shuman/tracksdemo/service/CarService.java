@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -24,18 +25,15 @@ public class CarService {
         this.trackRepository = trackRepository;
     }
 
+    public List<Car> getCars(UUID trackId) {
+        return carRepository.findByTrackId(trackId);
+    }
+
     public Car createCar(UUID trackId, Car carToCreate) {
-        if (trackId == null) {
-            throw new IllegalArgumentException("Please provide track ID");
-        }
-
-        Track track = trackRepository.findById(trackId)
-            .orElseThrow(() -> new IllegalStateException(String.format("Track with provided ID [%s] is not present",
-                trackId.toString())));
-
-        carToCreate.setTrack(track);
-
-        return carRepository.save(carToCreate);
+        return trackRepository.findById(trackId).map(track -> {
+            carToCreate.setTrack(track);
+            return carRepository.save(carToCreate);
+        }).orElseThrow(() -> new IllegalArgumentException("Track ID " + trackId + " not found"));
     }
 
     public Car updateCar(Car carToUpdate) {
