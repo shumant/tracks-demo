@@ -2,7 +2,7 @@
   <div class="container">
     <div class="card">
       <div class="card-header">
-        <h3>Add Item</h3>
+        <h3>Add Track</h3>
       </div>
       <div class="card-body">
         <form v-on:submit.prevent="addItem">
@@ -15,7 +15,11 @@
             <input type="text" class="form-control" v-model="item.description"/>
           </div>
           <div class="form-group">
-            <input type="submit" class="btn btn-primary" value="Add Item"/>
+            <label>Item length, in kilometers:</label>
+            <input type="number" class="form-control" v-model="item.length.value"/>
+          </div>
+          <div class="form-group">
+            <input type="submit" class="btn btn-primary" value="Add Track"/>
           </div>
         </form>
       </div>
@@ -33,11 +37,14 @@
     },
     data() {
       return {
-        item: {}
+        item: {
+          length: {}
+        }
       }
     },
     methods: {
       addItem() {
+        this.item.length.unit = "km"
         apiService.createTrack(this.item).then((response) => {
           console.log(response.data);
           this.$router.push({name: 'Index'});

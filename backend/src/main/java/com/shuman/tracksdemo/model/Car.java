@@ -22,7 +22,7 @@ public class Car {
     private TransmissionType transmission;
     private AiState ai;
 
-    @JsonProperty("max-speed")
+    @JsonProperty("max_speed")
     @Embedded
     private CarSpeed maxSpeed;
 

@@ -1,14 +1,14 @@
 <template>
   <div>
-    Index Component
-    <h1>Items</h1>
+    <h1>Tracks</h1>
 
     <table class="table table-hover">
       <thead>
       <tr>
         <td>ID</td>
-        <td>Item Name</td>
-        <td>Item description</td>
+        <td>Name</td>
+        <td>Description</td>
+        <td>Length</td>
         <td>Actions</td>
       </tr>
       </thead>
@@ -18,6 +18,7 @@
         <td>{{ item.id }}</td>
         <td>{{ item.name }}</td>
         <td>{{ item.description }}</td>
+        <td>{{ item.length.value }}  {{ item.length.unit}}</td>
         <td>
           <router-link :to="{name: 'Edit', params: { item: item }}" class="btn btn-primary">Edit</router-link>
         </td>
