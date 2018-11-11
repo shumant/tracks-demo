@@ -1,83 +1,81 @@
 <template>
-<div>
-<h1>Tracks ()</h1>
+  <div>
+    <h1>Tracks ()</h1>
 
 
-<table class="table table-bordered table-hover">
+    <table class="table table-bordered table-hover">
 
-<thead>
+      <thead>
 
-<tr>
+      <tr>
 
-<th>#</th>
+        <th>#</th>
 
-<th>Name</th>
-<th>Description</th>
-<th>Email</th>
-<th>Phone</th>
-<th> Address </th>
-<th>Actions</th>
-</tr>
-</thead>
-<tbody>
-<tr v-for="track in tracks">
+        <th>Name</th>
+        <th>Description</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th> Address</th>
+        <th>Actions</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr v-for="track in tracks">
 
-<th>{ { track.id } }</th>
+        <th>{ { track.id } }</th>
 
-<th>{ { track.name } }</th>
+        <th>{ { track.name } }</th>
 
-<td>{ { track.description } }</td>
+        <td>{ { track.description } }</td>
 
-<td>
+        <td>
 
-<button class="btn btn-danger" @click="deleteTrack(track)"> X</button>
-</td>
-</tr>
-</tbody>
-</table>
-<div>
-</div>
-</div>
+          <button class="btn btn-danger" @click="deleteTrack(track)"> X</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+    <div>
+    </div>
+  </div>
 
 </template>
 
 
 <script>
-import {APIService} from '../APIService';
+  import {APIService} from '../APIService';
 
-const apiService = new APIService();
+  const apiService = new APIService();
 
-export default {
+  export default {
 
-name: 'ListTracks',
+    name: 'ListTracks',
 
-components: {
+    components: {},
 
-},
+    data() {
 
-data() {
+      return {
+        tracks: [],
+        numberOfTracks: 0,
 
-return {
-tracks: [],
-numberOfTracks:0,
+      };
 
-};
+    },
 
-},
+    methods: {
 
-methods: {
+      getTracks() {
+        apiService.getTracks().then((data) => {
 
-getTracks(){
-    apiService.getTracks().then((data) => {
+          this.tracks = data.data;
+          this.numberOfTracks = data.count;
+        });
+      },
+    },
 
-        this.tracks = data.data;
-        this.numberOfTracks= data.count;
-    });
-},
-},
-
-mounted() {
-this.getTracks();
-},
-}
+    mounted() {
+      this.getTracks();
+    },
+  }
 </script>

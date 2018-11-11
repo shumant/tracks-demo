@@ -1,32 +1,35 @@
 import axios from 'axios';
-export class APIService{
 
-constructor(){
-}
+export class APIService {
 
-getTracks() {
+  constructor() {
+  }
+
+  getTracks() {
     const url = `tracks/`;
     return axios.get(url);
-}
+  }
 
-getContact(pk) {
+  getContact(pk) {
     const url = `${API_URL}/api/contacts/${pk}`;
-    return axios.get(url).then(response => response.data);
-}
+    return axios.get(url).then(response = > response.data
+  )
+    ;
+  }
 
-createTrack(track){
+  createTrack(track) {
     const url = `tracks/`;
-    return axios.post(url,track);
-}
+    return axios.post(url, track);
+  }
 
-updateTrack(track){
+  updateTrack(track) {
     const url = `tracks/${track.id}`;
-    return axios.put(url,track);
-}
+    return axios.put(url, track);
+  }
 
-deleteTrack(track){
+  deleteTrack(track) {
     const url = `tracks/${track.id}`;
     return axios.delete(url);
-}
+  }
 
 }

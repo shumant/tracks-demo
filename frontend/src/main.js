@@ -37,11 +37,11 @@ const routes = [
   },
 ];
 
-const router = new VueRouter({ mode: 'history', routes: routes });
+const router = new VueRouter({mode: 'history', routes: routes});
 
 router.beforeResolve((to, from, next) => {
   if (to.name) {
-      NProgress.start()
+    NProgress.start()
   }
   next()
 });

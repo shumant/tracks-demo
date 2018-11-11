@@ -20,18 +20,19 @@
 
 <script>
 
-export default {
-}
+  export default {}
 </script>
 
 <style>
-    .fade-enter-active, .fade-leave-active {
-      transition: opacity .5s
-    }
-    .fade-enter, .fade-leave-active {
-      opacity: 0
-    }
-    .gap {
-      margin-top: 50px;
-    }
+  .fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+
+  .fade-enter, .fade-leave-active {
+    opacity: 0
+  }
+
+  .gap {
+    margin-top: 50px;
+  }
 </style>
