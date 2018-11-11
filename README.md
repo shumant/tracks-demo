@@ -3,7 +3,7 @@
 Sample app for RESTful API and Frontend for Tracks and Cars persistence 
 
 - Java 11
-- Spring Boot 5 with embedded Tomcat
+- Spring Boot 2 with embedded Tomcat
 - OpenTable Embedded PostgreSQL for embedded Postgres
 - Maven as build system
 
