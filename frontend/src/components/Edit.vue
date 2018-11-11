@@ -185,7 +185,6 @@
         this.editedCar = car;
       },
       updateCar(car) {
-        car.trackId = this.item.id;
         apiService.updateCar(car).then((response) => {
           this.getCars();
           this.editedCar = {};

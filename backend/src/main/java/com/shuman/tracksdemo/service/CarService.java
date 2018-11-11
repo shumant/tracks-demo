@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -37,10 +38,11 @@ public class CarService {
     }
 
     public Car updateCar(Car carToUpdate) {
-        if (!carRepository.existsById(carToUpdate.getId())) {
-            throw new IllegalStateException(String.format("Car with provided ID [%s] is not present",
-                carToUpdate.getId().toString()));
-        }
+        Car carFromDb = carRepository.findById(carToUpdate.getId())
+                .orElseThrow(() -> new IllegalStateException(String.format("Car with provided ID [%s] is not present",
+                                                                           carToUpdate.getId().toString())));
+
+        carToUpdate.setTrack(carFromDb.getTrack());
 
         return carRepository.save(carToUpdate);
     }
