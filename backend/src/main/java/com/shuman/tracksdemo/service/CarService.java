@@ -31,6 +31,10 @@ public class CarService {
     }
 
     public Car createCar(UUID trackId, Car carToCreate) {
+        if (carToCreate.getMaxSpeed() == null || carToCreate.getMaxSpeed().getValue() < 0) {
+            throw new IllegalArgumentException("Speed cannot be negative");
+        }
+
         return trackRepository.findById(trackId).map(track -> {
             carToCreate.setTrack(track);
             return carRepository.save(carToCreate);
@@ -38,6 +42,11 @@ public class CarService {
     }
 
     public Car updateCar(Car carToUpdate) {
+
+        if (carToUpdate.getMaxSpeed() == null || carToUpdate.getMaxSpeed().getValue() < 0) {
+            throw new IllegalArgumentException("Speed cannot be negative");
+        }
+
         Car carFromDb = carRepository.findById(carToUpdate.getId())
                 .orElseThrow(() -> new IllegalStateException(String.format("Car with provided ID [%s] is not present",
                                                                            carToUpdate.getId().toString())));

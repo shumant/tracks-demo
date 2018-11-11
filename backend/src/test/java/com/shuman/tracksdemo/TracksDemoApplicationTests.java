@@ -21,8 +21,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
-import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -64,7 +63,7 @@ public class TracksDemoApplicationTests {
         assertEquals("Created track mismatch", trackToBeCreated, trackRepository.getOne(createdTrackId));
 
         String tracksResponse =
-            performGet("/tracks/").andReturn().getResponse().getContentAsString();
+                performGet("/tracks/").andReturn().getResponse().getContentAsString();
         Track[] trackFromApi = objectMapper.readValue(tracksResponse, Track[].class);
 
         assertEquals("API cars mismatch", trackToBeCreated, trackFromApi[0]);
@@ -122,7 +121,7 @@ public class TracksDemoApplicationTests {
         assertEquals("Database cars mismatch", List.of(carToCreate1, carToCreate2), carsFromDb);
 
         String carsResponse =
-            performGet("/tracks/" + savedTrack.getId() + "/cars").andReturn().getResponse().getContentAsString();
+                performGet("/tracks/" + savedTrack.getId() + "/cars").andReturn().getResponse().getContentAsString();
         Car[] carsFromApi = objectMapper.readValue(carsResponse, Car[].class);
 
         carToCreate1.setTrack(null);
@@ -152,6 +151,28 @@ public class TracksDemoApplicationTests {
     }
 
     @Test
+    public void update__negative_speed_fail() throws Exception {
+        // prepare
+        Track savedTrack = trackRepository.save(new Track().setName("dummy track"));
+
+        Car car = Util.car1(savedTrack);
+
+        Car savedCar = carRepository.save(car);
+
+        // act
+        try {
+            mvc.perform(put("/cars/" + savedCar.getId())
+                                .contentType(MediaType.APPLICATION_JSON)
+                                .content(readFile("update_car_negative_speed.json")))
+
+               // assert
+               .andExpect(status().is5xxServerError());
+        } catch (Exception e) {
+            assertTrue("Wrong exception", e.getCause() instanceof IllegalArgumentException);
+        }
+    }
+
+    @Test
     public void remove_car() throws Exception {
         // prepare
         Track savedTrack = trackRepository.save(new Track().setName("dummy track"));
@@ -176,41 +197,41 @@ public class TracksDemoApplicationTests {
 
     private ResultActions performPost(String url, String contentFileName) throws Exception {
         return mvc.perform(post(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(readFile(contentFileName)))
+                                   .contentType(MediaType.APPLICATION_JSON)
+                                   .content(readFile(contentFileName)))
 
-            // assert
-            .andExpect(status().isOk())
-            .andExpect(content()
-                .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").exists());
+                  // assert
+                  .andExpect(status().isOk())
+                  .andExpect(content()
+                                     .contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                  .andExpect(jsonPath("$.id").exists());
     }
 
     private ResultActions performPut(String url, String contentFileName) throws Exception {
         return mvc.perform(put(url)
-            .contentType(MediaType.APPLICATION_JSON)
-            .content(readFile(contentFileName)))
+                                   .contentType(MediaType.APPLICATION_JSON)
+                                   .content(readFile(contentFileName)))
 
-            // assert
-            .andExpect(status().isOk())
-            .andExpect(content()
-                .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                  // assert
+                  .andExpect(status().isOk())
+                  .andExpect(content()
+                                     .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     private ResultActions performGet(String url) throws Exception {
         return mvc.perform(get(url))
 
-            // assert
-            .andExpect(status().isOk())
-            .andExpect(content()
-                .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
+                  // assert
+                  .andExpect(status().isOk())
+                  .andExpect(content()
+                                     .contentTypeCompatibleWith(MediaType.APPLICATION_JSON));
     }
 
     private ResultActions performDelete(String url) throws Exception {
         return mvc.perform(delete(url))
 
-            // assert
-            .andExpect(status().isOk());
+                  // assert
+                  .andExpect(status().isOk());
     }
 
     private String readFile(String fileName) throws IOException {

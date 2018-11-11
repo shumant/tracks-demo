@@ -28,6 +28,10 @@ public class TrackService {
             throw new IllegalStateException("Cannot create a trackId with id");
         }
 
+        if (track.getLength() == null || track.getLength().getValue() < 0) {
+            throw new IllegalArgumentException("Length cannot be negative");
+        }
+
         return trackRepository.save(track);
     }
 
@@ -35,6 +39,11 @@ public class TrackService {
         if (!trackRepository.existsById(trackToUpdate.getId())) {
             throw new IllegalStateException(String.format("Track with provided ID [%s] is not present", trackToUpdate.getId().toString()));
         }
+
+        if (trackToUpdate.getLength() == null || trackToUpdate.getLength().getValue() < 0) {
+            throw new IllegalArgumentException("Length cannot be negative");
+        }
+
         return trackRepository.save(trackToUpdate);
     }
 

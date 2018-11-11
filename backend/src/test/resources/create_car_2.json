@@ -2,7 +2,7 @@
   "code": "rdb3",
   "transmission": "automatic",
   "ai": "disabled",
-  "max-speed": {
+  "max_speed": {
     "unit": "mps",
     "value": 120.967
   }

@@ -13,41 +13,14 @@ import java.util.Objects;
 import java.util.UUID;
 
 @RestController
-public class TrackCarController {
-    private TrackService trackService;
+public class CarController {
     private CarService carService;
 
     @Autowired
-    public TrackCarController(TrackService trackService, CarService carService) {
-        this.trackService = trackService;
+    public CarController(CarService carService) {
         this.carService = carService;
     }
-    
-    // tracks
 
-    @GetMapping("/tracks")
-    public List<Track> getTracks() {
-        return trackService.getTracks();
-    }
-
-    @PostMapping("/tracks")
-    public Track createTrack(@RequestBody Track track) {
-        return trackService.createTrack(track);
-    }
-
-    @PutMapping("/tracks/{id}")
-    public Track updateTrack(@PathVariable("id") UUID trackId, @RequestBody Track track) {
-        track.setId(trackId);
-        return trackService.updateTrack(track);
-    }
-
-    @DeleteMapping("/tracks/{id}")
-    public ResponseEntity<?> deleteTrack(@PathVariable("id") UUID trackId) {
-        trackService.removeTrack(trackId);
-        return ResponseEntity.ok().build();
-    }
-    
-    // cars
     @GetMapping("/tracks/{trackId}/cars")
     public List<Car> getCars(@PathVariable("trackId") UUID trackId) {
         return carService.getCars(trackId);

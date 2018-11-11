@@ -16,8 +16,12 @@
             <input type="text" class="form-control" v-model="item.description"/>
           </div>
           <div class="form-group">
-            <label>Item length, in kilometers:</label>
+            <label>Item length:</label>
             <input type="text" class="form-control" v-model="item.length.value"/>
+            <select v-model="item.length.unit">
+              <option>KM</option>
+              <option>ML</option>
+            </select>
           </div>
           <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Update Track"/>
@@ -41,7 +45,7 @@
             <td>Code</td>
             <td>Transmission</td>
             <td>Art. intel.</td>
-            <td>Max speed, mps</td>
+            <td>Max speed</td>
             <td>Actions</td>
           </tr>
           </thead>
@@ -55,13 +59,23 @@
               <input type="text" v-model="creatingCar.code"/>
             </td>
             <td>
-              <input type="text" v-model="creatingCar.transmission"/>
+              <select v-model="creatingCar.transmission">
+                <option>AUTOMATIC</option>
+                <option>MANUAL</option>
+              </select>
             </td>
             <td>
-              <input type="text" v-model="creatingCar.ai"/>
+              <select v-model="creatingCar.ai">
+                <option>ENABLED</option>
+                <option>DISABLED</option>
+              </select>
             </td>
             <td>
-              <input type="text" v-model="creatingCar.max_speed.value"/> MPS
+              <input type="number" step="0.01" v-model="creatingCar.max_speed.value"/>
+              <select v-model="creatingCar.max_speed.unit">
+                <option>KPS</option>
+                <option>MPS</option>
+              </select>
             </td>
 
             <td>
@@ -81,15 +95,25 @@
             </td>
             <td v-if="!thisCarIsEdited(car)">{{ car.transmission }}</td>
             <td v-if="thisCarIsEdited(car)">
-              <input type="text" v-model="car.transmission"/>
+              <select v-model="car.transmission">
+                <option>AUTOMATIC</option>
+                <option>MANUAL</option>
+              </select>
             </td>
             <td v-if="!thisCarIsEdited(car)">{{ car.ai }}</td>
             <td v-if="thisCarIsEdited(car)">
-              <input type="text" v-model="car.ai"/>
+              <select v-model="car.ai">
+                <option>ENABLED</option>
+                <option>DISABLED</option>
+              </select>
             </td>
             <td v-if="!thisCarIsEdited(car)">{{ car.max_speed.value }} {{ car.max_speed.unit }}</td>
             <td v-if="thisCarIsEdited(car)">
-              <input type="number" v-model="car.max_speed.value"/> {{ car.max_speed.unit }}
+              <input type="number" step="0.01" v-model="car.max_speed.value"/>
+              <select v-model="car.max_speed.unit">
+                <option>KPS</option>
+                <option>MPS</option>
+              </select>
             </td>
 
 
@@ -147,7 +171,6 @@
       },
 
       updateItem() {
-        this.item.length.unit = "km";
         apiService.updateTrack(this.item).then((response) => {
           this.$router.push({name: 'Index'});
         });

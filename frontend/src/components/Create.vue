@@ -15,8 +15,12 @@
             <input type="text" class="form-control" v-model="item.description"/>
           </div>
           <div class="form-group">
-            <label>Item length, in kilometers:</label>
-            <input type="number" class="form-control" v-model="item.length.value"/>
+            <label>Item length:</label>
+            <input type="number" step="0.01" class="form-control" v-model="item.length.value"/>
+            <select v-model="item.length.unit">
+              <option>KM</option>
+              <option>ML</option>
+            </select>
           </div>
           <div class="form-group">
             <input type="submit" class="btn btn-primary" value="Add Track"/>
@@ -44,7 +48,6 @@
     },
     methods: {
       addItem() {
-        this.item.length.unit = "km"
         apiService.createTrack(this.item).then((response) => {
           console.log(response.data);
           this.$router.push({name: 'Index'});
