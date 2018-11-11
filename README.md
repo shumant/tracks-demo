@@ -10,7 +10,7 @@ Sample app for RESTful API and Frontend for Tracks and Cars persistence
 Unit-tests are omitted because the project is really tiny.
 API workflow is presented in com.shuman.tracksdemo.TracksDemoApplicationTests.java 
 
-To run tests and build jar:
+To run tests, build jar, install frontend dependencies and pack it:
 > ./mvnw clean install
 
 After that to run the app as server on port 8080:
